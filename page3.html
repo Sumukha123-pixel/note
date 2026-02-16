@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Eat Strawberry 🍓</title>
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding-top:60px;
+  font-family:Arial, sans-serif;
+  background: radial-gradient(circle at top,#ff9a9e,#ff6b6b,#d6336c);
+  text-align:center;
+}
+
+h1 {
+  color:white;
+  margin-bottom:10px;
+}
+
+#msg {
+  color:white;
+  font-size:22px;
+  margin-bottom:40px;
+  padding:10px 20px;
+  background: rgba(0,0,0,0.25);
+  border-radius:25px;
+  transition: all 0.3s;
+}
+
+#berry {
+  width:220px;
+  cursor:pointer;
+  transition: transform 0.2s;
+}
+
+#berry.bite {
+  transform: scale(0.85) rotate(-10deg);
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍓 Tap to Eat Strawberry</h1>
+<div id="msg">Take a bite!</div>
+<img id="berry" src="strawberry_stage_0.png">
+
+<script>
+// Stages with messages
+const stages = [
+  {img:"strawberry_stage_0.png", msg:"Take a bite!"},
+  {img:"strawberry_stage_1.png", msg:"Yum 😋"},
+  {img:"strawberry_stage_2.png", msg:"Half gone!"},
+  {img:"strawberry_stage_3.png", msg:"Almost finished!"},
+  {img:"strawberry_stage_4.png", msg:"All done 🎉"}
+];
+
+let currentStage = 0;
+const berry = document.getElementById("berry");
+const msg = document.getElementById("msg");
+
+berry.onclick = () => {
+  // Show stage image and message
+  const stage = stages[currentStage];
+  berry.src = stage.img;
+  msg.textContent = stage.msg;
+
+  // Bite animation
+  berry.classList.add("bite");
+  setTimeout(() => berry.classList.remove("bite"), 200);
+
+  // Move to next stage if not finished
+  if(currentStage < stages.length - 1){
+    currentStage++;
+  }
+};
+</script>
+
+</body>
+</html>

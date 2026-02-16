@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catch My Heart 💖</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffe4ec, #fff0f5);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  h1 { color: #e91e63; margin-top: 15px; }
+  #score { font-size: 20px; margin: 10px; }
+
+  .heart {
+    position: absolute;
+    font-size: 26px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(100vh); }
+  }
+
+  #bucket {
+    position: fixed;
+    bottom: 10px;
+    font-size: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #gameOver {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 24px;
+    color: #e91e63;
+  }
+
+  .btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #e91e63;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Catch My Heart 💗</h1>
+<div id="score">Hearts Caught: 0</div>
+
+<div id="bucket">🧺</div>
+
+<div id="gameOver">
+  <div id="finalScore"></div>
+  <div>You always have my heart ❤️</div>
+  <button class="btn" onclick="location.reload()">Play Again</button>
+
+  <!-- NEXT PAGE BUTTON -->
+  <a href="page3.html">
+    <button class="btn">Next Surprise 💌</button>
+  </a>
+</div>
+
+<script>
+let score = 0;
+let spawnInterval = 2000;
+let fallDuration = 6;
+let gameRunning = true;
+
+const bucket = document.getElementById("bucket");
+const scoreText = document.getElementById("score");
+
+document.addEventListener("mousemove", (e) => {
+  bucket.style.left = e.clientX + "px";
+});
+
+function endGame() {
+  gameRunning = false;
+  document.getElementById("finalScore").innerText =
+    "You caught " + score + " hearts 💖";
+  document.getElementById("gameOver").style.display = "flex";
+}
+
+function createHeart() {
+  if (!gameRunning) return;
+
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 90 + "vw";
+  heart.style.animationDuration = fallDuration + "s";
+
+  document.body.appendChild(heart);
+
+  const fallCheck = setInterval(() => {
+    const h = heart.getBoundingClientRect();
+    const b = bucket.getBoundingClientRect();
+
+    const caught =
+      h.bottom >= b.top &&
+      h.left < b.right &&
+      h.right > b.left;
+
+    if (caught) {
+      score++;
+      scoreText.innerText = "Hearts Caught: " + score;
+      heart.remove();
+      clearInterval(fallCheck);
+
+      spawnInterval = Math.max(700, spawnInterval - 80);
+      fallDuration = Math.max(2.5, fallDuration - 0.15);
+      restartSpawner();
+    }
+
+    if (h.top > window.innerHeight) {
+      heart.remove();
+      clearInterval(fallCheck);
+      endGame();
+    }
+  }, 40);
+}
+
+let spawner;
+function restartSpawner() {
+  clearInterval(spawner);
+  spawner = setInterval(createHeart, spawnInterval);
+}
+
+restartSpawner();
+</script>
+
+</body>
+</html>

@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffd6e0, #fff3b0);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    position: relative;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 400px;
+    z-index: 2;
+  }
+
+  h1 { color: #e91e63; }
+  p { font-size: 18px; color: #444; }
+
+  .btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #e91e63;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .float {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.6;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 0.6; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>To My Favorite Person</h1>
+  <p>
+    You make my days brighter and my worries lighter.  
+    I’m really lucky to have you in my life.  
+    Keep smiling — it suits you the best.
+  </p>
+  <p>— Sumukha</p>
+
+  <a href="page2.html">
+    <button class="btn">Open My Heart 💌</button>
+  </a>
+</div>
+
+<script>
+const symbols = ["💗","💕","🌸","💖","🌺"];
+for (let i = 0; i < 25; i++) {
+  const el = document.createElement("div");
+  el.className = "float";
+  el.innerHTML = symbols[Math.floor(Math.random()*symbols.length)];
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.animationDuration = (5 + Math.random()*5) + "s";
+  el.style.animationDelay = Math.random() * 5 + "s";
+  document.body.appendChild(el);
+}
+</script>
+
+</body>
+</html>
 
